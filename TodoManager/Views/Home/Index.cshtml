@@ -1,16 +1,20 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-
+<style>
+    .strike {
+        text-decoration: line-through;
+    }
+</style>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span4">
             
             <h1>Todo Manager</h1>
             
-            <form class="well form-search">
-                <input type="text" style="width:300px;" class="input-medium search-query" placeholder="task name">
-                <a href="#" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add New Todo</a> 
+            <form class="well form-search" data-bind="with: todoTemp">
+                <input type="text" data-bind="value: Description" style="width:300px;" class="input-medium search-query" placeholder="task name">
+                <a href="#" class="btn btn-primary" data-bind="click: $parent.addTodo"><i class="icon-plus icon-white"></i> Add New Todo</a> 
             </form>
 
             <table class="table">
@@ -19,11 +23,11 @@
                     <th>Description</th>
                     <th>&nbsp;</th>
                 </thead>
-                <tbody>
+                <tbody data-bind="foreach: todos">
                     <tr>
-                        <td><input type="checkbox" ></td>
-                        <td>test123</td>
-                        <td><a href="#" class="btn">Delete</a></td>
+                        <td><input type="checkbox" data-bind="checked: Done, click: $parent.saveTodo" ></td>
+                        <td data-bind="text: Description, css: {strike: Done() }"></td>
+                        <td><a href="#" class="btn" data-bind="click: $parent.deleteTodo">Delete</a></td>
                     </tr>
                 </tbody>
             </table>
